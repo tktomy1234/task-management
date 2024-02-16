@@ -2,7 +2,7 @@
   "bail": 1,
   "verbose": true,
   "collectCoverageFrom": [
-    "**/*.{js,jsx}",
+    "**/*.{ts,tsx}",
     "!**/node_modules/**",
     "!**/*.test.js",
     "!**/coverage/**",
@@ -11,25 +11,14 @@
   ],
   "projects": [
     {
-      "displayName": "backend",
-      "testEnvironment": "node",
-      "roots": ["<rootDir>/server"],
-      "transform": {
-        "^.+\\.tsx?$": "ts-jest"
-      },
-      "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$",
-      "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"]
-    },
-    {
       "displayName": "frontend",
       "testEnvironment": "jsdom",
-      "roots": ["<rootDir>/client"],
-      "testMatch": ["<rootDir>/client/**/*.test.ts","<rootDir>/client/**/*.test.tsx"],
+      "testMatch": ["<rootDir>/src/**/*.test.ts","<rootDir>/src/**/*.test.tsx"],
       "moduleFileExtensions": ["js", "json","ts","tsx"],
       "moduleNameMapper": {
         "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
         "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
-      } 
+      }  
     }
   ]
 }
