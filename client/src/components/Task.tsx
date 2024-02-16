@@ -1,22 +1,27 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useContext } from 'react';
 import Button from '../atoms/Button';
 import classNames from 'classnames';
 import { TaskProps } from '../interfaces/Interfaces';
+import { TaskContext } from '../context/TaskContext';
 import './task.css';
 
-const Task: FunctionComponent<TaskProps> = ({ task, onDelete, onDone }) => {
+const Task: FunctionComponent<TaskProps> = ({ task }) => {
+    const { deleteTask, markTaskAsDone } = useContext(TaskContext);
+
     const onDeleteHandler = () => {
-        onDelete(task._id || 0);
+        deleteTask(task._id || 0);
     }
+
     const onEdit = () => {
         alert('Edit task')
     }
+
     const onDoneHandler = () => {
-        if (onDone) {
-            onDone(task._id || 0);
-        }
+        markTaskAsDone(task._id || 0);       
     }
+
     const wrapperClass = classNames('task', { 'task--done': !!task.done });
+
     return (
         <div className={wrapperClass}>
             <h3>{task.title}</h3>

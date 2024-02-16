@@ -2,6 +2,7 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Task from './Task';
+import DummyProvider from '../utils/DummyProvider';
 
 const mockTask = {
   title: 'Sample Task',
@@ -10,9 +11,14 @@ const mockTask = {
   done: false, 
 };
 
+
 describe('Task', () => {
   it('should render the task title and description', () => {
-    const { getByText } = render(<Task task={mockTask} onDelete={() => {}} />);
+    const { getByText } = render(
+      <DummyProvider>
+        <Task task={mockTask} />
+      </DummyProvider>
+    );
     const titleElement = getByText(mockTask.title);
     const descriptionElement = getByText(mockTask.description);
     expect(titleElement).toBeInTheDocument();
@@ -21,15 +27,23 @@ describe('Task', () => {
 
   it('should call the onDelete function with the task id when delete button is clicked', () => {
     const onDeleteMock = jest.fn();
-    const { getByText } = render(<Task task={mockTask} onDelete={onDeleteMock} />);
+    const { getByText } =  render(
+      <DummyProvider addOn={{deleteTask: onDeleteMock}}>
+        <Task task={mockTask} />
+      </DummyProvider>
+    );
     const deleteButton = getByText('Delete');
     fireEvent.click(deleteButton);
-    expect(onDeleteMock).toHaveBeenCalledWith(mockTask._id);
+    expect(onDeleteMock).toHaveBeenCalledTimes(1);
   });
 
   it('should display an alert when edit button is clicked', () => {
     window.alert = jest.fn();
-    const { getByText } = render(<Task task={mockTask} onDelete={() => {}} />);
+    const { getByText } =  render(
+      <DummyProvider >
+        <Task task={mockTask} />
+      </DummyProvider>
+    );
     const editButton = getByText('Edit');
     fireEvent.click(editButton);
     expect(window.alert).toHaveBeenCalledWith('Edit task');

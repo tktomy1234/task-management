@@ -1,19 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import TextInput from '../atoms/TextInput';
 import Button from '../atoms/Button';
+import { TaskContext } from '../context/TaskContext';
 
 type Task = {
   title: string;
   description: string;
 };
 
-type AddTaskFormProps = {
-  addTask: (task: Task) => void;
-};
-
-const AddTaskForm: React.FC<AddTaskFormProps> = ({ addTask }) => {
+const AddTaskForm: React.FC = () => {
   const [title, setTitle] = useState<string>('');
   const [description, setDescription] = useState<string>('');
+  const { addTask } = useContext(TaskContext);
 
   const onAddTask = () => {
     addTask({ title, description });

@@ -7,8 +7,6 @@ interface Task {
 
 interface TaskProps {
     task: Task;
-    onDelete: (taskId: number) => void;
-    onDone?: (taskId: number) => void;
 }
 
 interface TaskListProps {
